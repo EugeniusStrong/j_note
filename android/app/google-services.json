@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270117017144",
+    "project_id": "j-note-a255e",
+    "storage_bucket": "j-note-a255e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270117017144:android:40b6143d919b0ff4efb8cd",
+        "android_client_info": {
+          "package_name": "com.example.j_note"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvyWgh4a1fHoq5Dd6q62hRoVc_dBGQNmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
