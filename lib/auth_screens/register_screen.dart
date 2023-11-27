@@ -1,28 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+  //final db = FirebaseFirestore.instance;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
+  late final TextEditingController _confirmController;
+  late final TextEditingController _firstNameController;
+  late final TextEditingController _lastNameController;
+  late final TextEditingController _ageController;
 
   @override
   void initState() {
     super.initState();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _confirmController = TextEditingController();
+    _firstNameController = TextEditingController();
+    _lastNameController = TextEditingController();
+    _ageController = TextEditingController();
   }
 
   @override
   void dispose() {
     _emailController.clear();
     _passwordController.clear();
+    _confirmController.clear();
+    _firstNameController.clear();
+    _lastNameController.clear();
+    _ageController.clear();
     super.dispose();
   }
 
@@ -34,8 +47,22 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Center(
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  'Hello There!',
+                  style: GoogleFonts.bebasNeue(fontSize: 52),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  'Register below with you details!',
+                  style: TextStyle(fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: ClipRRect(
@@ -47,28 +74,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: double.infinity,
                       height: 300,
                       child: Image.asset(
-                        'assets/images/TODO-1.jpg',
+                        'assets/images/TODO-2.jpg',
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Hello Again!',
-                  style: GoogleFonts.bebasNeue(fontSize: 52),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  'Welcome back, you\'ve been missed!',
-                  style: TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -81,6 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
+                        keyboardType: TextInputType.emailAddress,
                         controller: _emailController,
                         decoration: const InputDecoration(
                             border: InputBorder.none, hintText: 'Email'),
@@ -115,20 +129,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
-                        ),
-                        onTap: () {},
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.white),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextField(
+                        controller: _confirmController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Confirm password'),
                       ),
-                    ],
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -145,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: const Center(
                         child: Text(
-                          'Sing In',
+                          'Sing Up',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -153,7 +169,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      // _singUp();
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -163,19 +181,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Don't have an account?",
+                      "I'm already registered! ",
                       style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     GestureDetector(
                       child: const Text(
-                        ' Register now',
+                        ' Login now',
                         style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ],
@@ -186,5 +206,13 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  bool _passwordConfirmed() {
+    if (_passwordController.text.trim() == _confirmController.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
