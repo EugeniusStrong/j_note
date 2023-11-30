@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:j_note/data/auth_data/auth_data.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final VoidCallback show;
+
+  const LoginScreen(
+    this.show, {
+    super.key,
+  });
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -145,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: const Center(
                         child: Text(
-                          'Sing In',
+                          'Sign In',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -153,7 +159,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      AuthenticationRemote().login(
+                        _emailController.text.trim(),
+                        _passwordController.text.trim(),
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -170,6 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 16),
                     ),
                     GestureDetector(
+                      onTap: widget.show,
                       child: const Text(
                         ' Register now',
                         style: TextStyle(

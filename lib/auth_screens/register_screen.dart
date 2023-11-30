@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:j_note/data/auth_data/auth_data.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  final VoidCallback show;
+
+  const RegisterScreen(
+    this.show, {
+    super.key,
+  });
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  //final db = FirebaseFirestore.instance;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
   late final TextEditingController _confirmController;
-  late final TextEditingController _firstNameController;
-  late final TextEditingController _lastNameController;
-  late final TextEditingController _ageController;
 
   @override
   void initState() {
@@ -23,9 +25,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     _confirmController = TextEditingController();
-    _firstNameController = TextEditingController();
-    _lastNameController = TextEditingController();
-    _ageController = TextEditingController();
   }
 
   @override
@@ -33,9 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _emailController.clear();
     _passwordController.clear();
     _confirmController.clear();
-    _firstNameController.clear();
-    _lastNameController.clear();
-    _ageController.clear();
+
     super.dispose();
   }
 
@@ -170,7 +167,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     onTap: () {
-                      // _singUp();
+                      AuthenticationRemote().register(
+                        _emailController.text.trim(),
+                        _passwordController.text.trim(),
+                        _confirmController.text.trim(),
+                      );
                     },
                   ),
                 ),
@@ -189,6 +190,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     GestureDetector(
+                      onTap: widget.show,
                       child: const Text(
                         ' Login now',
                         style: TextStyle(
@@ -206,13 +208,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
-  }
-
-  bool _passwordConfirmed() {
-    if (_passwordController.text.trim() == _confirmController.text.trim()) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }

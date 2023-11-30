@@ -5,6 +5,13 @@ class NoteListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return const Scaffold(
+      body: Center(
+        child: Text(
+          'YES!!!',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+    );
   }
 }
