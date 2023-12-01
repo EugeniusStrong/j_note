@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:j_note/auth_switch/login_switch.dart';
 import 'package:j_note/firebase_options.dart';
+import 'package:j_note/widgets/task_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const LoginSwitch(),
+      home: const TaskWidget(),
     );
   }
 }

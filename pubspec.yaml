@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^4.14.1
   google_fonts: ^6.1.0
   font_awesome_flutter: ^10.6.0
+  msh_checkbox: ^2.0.1
 
 dev_dependencies:
   flutter_test:
