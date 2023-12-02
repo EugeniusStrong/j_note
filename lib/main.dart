@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:j_note/firebase_options.dart';
+import 'package:j_note/note_screens/add_note.dart';
+import 'package:j_note/note_screens/note_list_screen.dart';
 import 'package:j_note/widgets/task_widget.dart';
 
 void main() async {
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const TaskWidget(),
+      home: const AddNote(),
     );
   }
 }

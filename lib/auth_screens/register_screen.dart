@@ -71,7 +71,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       width: double.infinity,
                       height: 300,
                       child: Image.asset(
-                        'assets/images/TODO-2.jpg',
+                        'assets/images_present/TODO-2.jpg',
                         fit: BoxFit.cover,
                       ),
                     ),

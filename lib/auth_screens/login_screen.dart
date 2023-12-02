@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: double.infinity,
                       height: 300,
                       child: Image.asset(
-                        'assets/images/TODO-1.jpg',
+                        'assets/images_present/TODO-1.jpg',
                         fit: BoxFit.cover,
                       ),
                     ),
