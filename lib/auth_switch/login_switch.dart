@@ -13,7 +13,10 @@ class LoginSwitch extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const NoteListScreen();
+            final user = snapshot.data;
+            return NoteListScreen(
+              nameUser: user?.email ?? "Unknown",
+            );
           } else {
             return const AuthSwitch();
           }

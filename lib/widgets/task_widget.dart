@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:j_note/data/firestore/firestore.dart';
+import 'package:j_note/model/note_model.dart';
+import 'package:j_note/note_screens/edit_note.dart';
 
 class TaskWidget extends StatefulWidget {
-  const TaskWidget({super.key});
+  final NoteModel _note;
+
+  const TaskWidget(this._note, {super.key});
 
   @override
   State<TaskWidget> createState() => _TaskWidgetState();
 }
 
-bool isDone = false;
-
 class _TaskWidgetState extends State<TaskWidget> {
   @override
   Widget build(BuildContext context) {
+    bool isDone = widget._note.isDone;
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Container(
@@ -46,9 +50,9 @@ class _TaskWidgetState extends State<TaskWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'title',
-                          style: TextStyle(
+                        Text(
+                          widget._note.title,
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Checkbox(
@@ -67,62 +71,82 @@ class _TaskWidgetState extends State<TaskWidget> {
                                 isDone = !isDone;
                               },
                             );
+                            FirestoreDatasource()
+                                .isDone(widget._note.id, isDone);
                           },
                         ),
                       ],
                     ),
-                    const Text(
-                      'subtitle',
-                      style: TextStyle(fontSize: 16, color: Colors.black45),
+                    Text(
+                      widget._note.subtitle,
+                      style:
+                          const TextStyle(fontSize: 16, color: Colors.black45),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Container(
-                          width: 90,
-                          height: 28,
-                          decoration: BoxDecoration(
-                            color: Colors.green[600],
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              FaIcon(
-                                FontAwesomeIcons.clock,
-                                size: 15,
-                                color: Colors.white,
-                              ),
-                              Text(
-                                'Time',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width: 90,
+                            height: 28,
+                            decoration: BoxDecoration(
+                              color: Colors.green[600],
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const FaIcon(
+                                  FontAwesomeIcons.clock,
+                                  size: 15,
+                                  color: Colors.white,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    overflow: TextOverflow.ellipsis,
+                                    widget._note.time,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        Container(
-                          width: 90,
-                          height: 28,
-                          decoration: BoxDecoration(
-                            color: Colors.green[100],
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              FaIcon(
-                                FontAwesomeIcons.penToSquare,
-                                size: 15,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditNote(widget._note),
                               ),
-                              Text(
-                                'Edit',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              ),
-                            ],
+                            );
+                          },
+                          child: Container(
+                            width: 90,
+                            height: 28,
+                            decoration: BoxDecoration(
+                              color: Colors.green[100],
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.penToSquare,
+                                  size: 15,
+                                ),
+                                Text(
+                                  'Edit',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -143,14 +167,14 @@ class _TaskWidgetState extends State<TaskWidget> {
       child: Container(
         width: 120,
         height: 130,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(7),
             bottomLeft: Radius.circular(7),
           ),
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/TODO-3.jpg',
+              'assets/images_actions/${widget._note.image}.jpg',
             ),
             fit: BoxFit.cover,
           ),

@@ -1,10 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:j_note/data/auth_data/auth_data.dart';
+import 'package:j_note/data/firestore/firestore.dart';
+import 'package:j_note/note_screens/add_note.dart';
 import 'package:j_note/widgets/task_widget.dart';
 
 class NoteListScreen extends StatefulWidget {
-  const NoteListScreen({super.key});
+  final String nameUser;
+
+  const NoteListScreen({super.key, required this.nameUser});
 
   @override
   State<NoteListScreen> createState() => _NoteListScreenState();
@@ -16,12 +22,28 @@ class _NoteListScreenState extends State<NoteListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.nameUser),
+        actions: [
+          IconButton(
+            onPressed: () {
+              AuthenticationRemote().signOut();
+            },
+            icon: const Icon(
+              Icons.logout,
+            ),
+          ),
+        ],
+      ),
       backgroundColor: Colors.grey[300],
       floatingActionButton: Visibility(
         visible: show,
         child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const AddNote()));
+          },
           backgroundColor: Colors.deepPurple,
-          onPressed: () {},
           child: const FaIcon(
             FontAwesomeIcons.plus,
             color: Colors.white,
@@ -43,10 +65,27 @@ class _NoteListScreenState extends State<NoteListScreen> {
             }
             return true;
           },
-          child: ListView.builder(
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return const TaskWidget();
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirestoreDatasource().stream(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              final listNotes = FirestoreDatasource().getNotes(snapshot);
+              return ListView.builder(
+                itemCount: listNotes.length,
+                itemBuilder: (context, index) {
+                  final note = listNotes[index];
+                  return Dismissible(
+                      onDismissed: (direction) {
+                        FirestoreDatasource().deleteNote(note.id);
+                      },
+                      key: UniqueKey(),
+                      child: TaskWidget(note));
+                },
+              );
             },
           ),
         ),

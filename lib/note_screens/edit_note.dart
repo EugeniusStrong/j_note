@@ -2,24 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:j_note/data/firestore/firestore.dart';
+import 'package:j_note/model/note_model.dart';
 
-class AddNote extends StatefulWidget {
-  const AddNote({super.key});
+class EditNote extends StatefulWidget {
+  final NoteModel _note;
+
+  const EditNote(this._note, {super.key});
 
   @override
-  State<AddNote> createState() => _AddNoteState();
+  State<EditNote> createState() => _EditNoteState();
 }
 
-class _AddNoteState extends State<AddNote> {
-  int _imageIndex = 0;
+class _EditNoteState extends State<EditNote> {
+  int imageIndex = 0;
   late final TextEditingController _titleController;
   late final TextEditingController _subtitleController;
 
   @override
   void initState() {
     super.initState();
-    _titleController = TextEditingController();
-    _subtitleController = TextEditingController();
+    _titleController = TextEditingController(text: widget._note.title);
+    _subtitleController = TextEditingController(text: widget._note.subtitle);
   }
 
   @override
@@ -108,7 +111,7 @@ class _AddNoteState extends State<AddNote> {
                           width: 1,
                           color: Colors.white,
                         ),
-                        boxShadow: _imageIndex == index
+                        boxShadow: imageIndex == index
                             ? [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.2),
@@ -138,7 +141,7 @@ class _AddNoteState extends State<AddNote> {
                               ),
                               onTap: () {
                                 setState(() {
-                                  _imageIndex = index;
+                                  imageIndex = index;
                                 });
                               },
                             ),
@@ -197,12 +200,12 @@ class _AddNoteState extends State<AddNote> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             FaIcon(
-                              FontAwesomeIcons.check,
+                              FontAwesomeIcons.penToSquare,
                               size: 25,
                               color: Colors.white,
                             ),
                             Text(
-                              'ADD',
+                              'EDIT',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -212,10 +215,11 @@ class _AddNoteState extends State<AddNote> {
                         ),
                       ),
                       onTap: () {
-                        FirestoreDatasource().addNote(
+                        FirestoreDatasource().updateNote(
+                          widget._note.id,
+                          imageIndex,
                           _titleController.text,
                           _subtitleController.text,
-                          _imageIndex,
                         );
                         Navigator.pop(context);
                       },

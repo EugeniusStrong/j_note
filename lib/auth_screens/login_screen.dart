@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:j_note/auth_screens/forgot_pass_screen.dart';
 import 'package:j_note/data/auth_data/auth_data.dart';
+import 'package:j_note/note_screens/note_list_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback show;
@@ -132,7 +134,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: 16),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ForgotPassScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
