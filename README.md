@@ -1,16 +1,24 @@
 # j_note
 
-A new Flutter project.
+# Описание проекта
 
-## Getting Started
+**Проект записной книжки с использованием хранилища Firebase и возможностью аутентификации через Firebase Authentication. Проект создавался с целью ознакомления и изучения Firebase. Фрэймворк Flutter.**
 
-This project is a starting point for a Flutter application.
+## Скриншоты приложения
 
-A few resources to get you started if this is your first Flutter project:
+|        Экран входа в приложение        |      Экран регистрации пользователя       |       Сброс пароля пользователя        | 
+|:--------------------------------------:|:-----------------------------------------:|:--------------------------------------:|
+| ![](./preview_images/login_screen.png) | ![](./preview_images/register_screen.png) | ![](./preview_images/reset_screen.png) | 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+|               Начальный экран               |           Создание заметки            |            Список заметок            |
+|:-------------------------------------------:|:-------------------------------------:|:------------------------------------:|
+| ![](./preview_images/empty_todo_screen.png) | ![](./preview_images/create_note.png) | ![](./preview_images/list_notes.png) |
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+|             Выполненые задачи             |       Редактирование заметки        |
+|:-----------------------------------------:|:-----------------------------------:|
+| ![](./preview_images/list_notes_done.png) | ![](./preview_images/edit_note.png) |
+
+## Скриншоты из консоли Google Firebase
+
+![](./preview_images/auth.png)
+![](./preview_images/database.png)

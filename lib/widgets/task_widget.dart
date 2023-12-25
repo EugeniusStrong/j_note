@@ -44,14 +44,15 @@ class _TaskWidgetState extends State<TaskWidget> {
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          widget._note.title,
+                          overflow: TextOverflow.ellipsis,
+                          widget._note.subtitle,
                           style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
@@ -78,9 +79,13 @@ class _TaskWidgetState extends State<TaskWidget> {
                       ],
                     ),
                     Text(
-                      widget._note.subtitle,
+                      overflow: TextOverflow.ellipsis,
+                      widget._note.title,
                       style:
                           const TextStyle(fontSize: 16, color: Colors.black45),
+                    ),
+                    const SizedBox(
+                      height: 12,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

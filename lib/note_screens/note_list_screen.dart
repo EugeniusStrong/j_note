@@ -74,6 +74,15 @@ class _NoteListScreenState extends State<NoteListScreen> {
                 );
               }
               final listNotes = FirestoreDatasource().getNotes(snapshot);
+              if (listNotes.isEmpty) {
+                return const Center(
+                  child: Text(
+                    "Create a note by pressing ' + '",
+                    style: TextStyle(fontSize: 25.0, color: Colors.black38),
+                  ),
+                );
+              }
+
               return ListView.builder(
                 itemCount: listNotes.length,
                 itemBuilder: (context, index) {
