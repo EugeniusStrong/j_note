@@ -4,8 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:j_note/auth_screens/forgot_pass_screen.dart';
 import 'package:j_note/bloc/auth/auth_bloc.dart';
 import 'package:j_note/data/auth_data/auth_data.dart';
-import 'package:j_note/note_screens/note_list_screen.dart';
-import 'package:j_note/data/auth_data/auth_data.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback show;
