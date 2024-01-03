@@ -45,7 +45,7 @@ class _EditNoteState extends State<EditNote> {
               ),
               Center(
                 child: Text(
-                  'Create Your Task',
+                  'Edit Your Task',
                   style: GoogleFonts.bebasNeue(fontSize: 52),
                 ),
               ),
