@@ -16,8 +16,3 @@ class SignInPressed extends AuthEvent {
   @override
   List<Object?> get props => [email, password];
 }
-
-class SingInScreenShow extends AuthEvent {
-  @override
-  List<Object?> get props => [];
-}

@@ -9,7 +9,15 @@ class ForgotPasswordInitial extends ForgotPasswordState {
   List<Object> get props => [];
 }
 
-class ForgotPasswordHasReset extends ForgotPasswordState {
+class ForgotPasswordResetSuccess extends ForgotPasswordState {
   @override
   List<Object> get props => [];
+}
+
+class ForgotPasswordFailed extends ForgotPasswordState {
+  final Object error;
+
+  const ForgotPasswordFailed({required this.error});
+  @override
+  List<Object> get props => [error];
 }

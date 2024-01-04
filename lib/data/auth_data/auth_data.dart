@@ -1,67 +1,64 @@
 import 'dart:async';
-
+import 'package:async/async.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:j_note/data/firestore/firestore.dart';
 
 abstract class AuthenticationData {
-  Future<void> register(String email, String password, String confirmPassword);
+  Future<Result> register(String email, String password);
 
-  Future<void> login(String email, String password);
+  Future<Result> login(String email, String password);
 
-  Future<void> signOut();
+  Future<Result> signOut();
 
-  Future passwordReset(String email, BuildContext context);
+  Future<Result> passwordReset(String email);
 }
 
 class AuthenticationRemote extends AuthenticationData {
   @override
-  Future<void> login(String email, String password) async {
-    await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
-  }
-
-  @override
-  Future<void> register(
-      String email, String password, String confirmPassword) async {
-    if (confirmPassword == password) {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        FirestoreDatasource().createUser(email);
-      });
+  Future<Result<UserCredential>> login(String email, String password) async {
+    try {
+      final result = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      return Result.value(result);
+    } catch (e) {
+      debugPrint("Ошибка при входе: $e");
+      return Result.error(e);
     }
   }
 
   @override
-  Future<void> signOut() async {
+  Future<Result<UserCredential>> register(String email, String password) async {
+    try {
+      final user = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      await FirestoreDatasource().createUser(email);
+      return Result.value(user);
+    } catch (e) {
+      debugPrint("Ошибка при регистрации: $e");
+      return Result.error(e);
+    }
+  }
+
+  @override
+  Future<Result> signOut() async {
     try {
       await FirebaseAuth.instance.signOut();
+      return Result.value(true);
     } catch (e) {
-      print("Ошибка при выходе из учетной записи: $e");
+      debugPrint("Ошибка при выходе из учетной записи: $e");
+      return Result.error(e);
     }
   }
 
   @override
-  Future passwordReset(String email, BuildContext context) async {
+  Future<Result> passwordReset(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          content: Text('Password reset link sent to $email! Check your email'),
-        ),
-      );
+      return Result.value(true);
     } on FirebaseAuthException catch (e) {
-      print(e);
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          content: Text(
-            e.message.toString(),
-          ),
-        ),
-      );
+      debugPrint(e.toString());
+      return Result.error(e);
     }
   }
 }

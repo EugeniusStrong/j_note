@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:j_note/auth_screens/login_screen.dart';
 import 'package:j_note/bloc/register/register_bloc.dart';
 import 'package:j_note/data/auth_data/auth_data.dart';
 
 class RegisterScreen extends StatefulWidget {
-  final VoidCallback show;
-
-  const RegisterScreen(
-    this.show, {
+  const RegisterScreen({
     super.key,
   });
 
@@ -176,13 +174,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             onTap: () {
-                              context.read<RegisterBloc>().add(
-                                    SignUpPressed(
-                                      email: _emailController.text.trim(),
-                                      password: _passwordController.text.trim(),
-                                      confirm: _confirmController.text.trim(),
-                                    ),
-                                  );
+                              final email = _emailController.text.trim();
+                              final password = _passwordController.text.trim();
+                              final confirmPassword =
+                                  _confirmController.text.trim();
+                              if (confirmPassword == password) {
+                                context.read<RegisterBloc>().add(
+                                      SignUpPressed(
+                                        email: email,
+                                        password: password,
+                                      ),
+                                    );
+                              }
                             },
                           ),
                         ),
@@ -201,7 +204,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: widget.show,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginScreen()));
+                              },
                               child: const Text(
                                 ' Login now',
                                 style: TextStyle(

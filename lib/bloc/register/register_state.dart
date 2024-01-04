@@ -13,3 +13,11 @@ class RegisterSuccess extends RegisterState {
   @override
   List<Object> get props => [];
 }
+
+class RegisterFailed extends RegisterState {
+  final Object error;
+
+  const RegisterFailed({required this.error});
+  @override
+  List<Object> get props => [error];
+}

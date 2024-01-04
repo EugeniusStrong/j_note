@@ -16,7 +16,7 @@ class FirestoreDatasource {
           .set({"id": _auth.currentUser!.uid, "email": email});
       return true;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return true;
     }
   }
@@ -40,7 +40,7 @@ class FirestoreDatasource {
       });
       return true;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return true;
     }
   }
@@ -69,7 +69,7 @@ class FirestoreDatasource {
       }).toList();
       return notesList;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return [];
     }
   }
@@ -92,7 +92,7 @@ class FirestoreDatasource {
           .update({'isDone': isDone});
       return true;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return true;
     }
   }
@@ -114,7 +114,7 @@ class FirestoreDatasource {
       });
       return true;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return true;
     }
   }
@@ -129,7 +129,7 @@ class FirestoreDatasource {
           .delete();
       return true;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return true;
     }
   }

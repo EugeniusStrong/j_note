@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:j_note/auth_screens/forgot_pass_screen.dart';
+import 'package:j_note/auth_screens/register_screen.dart';
 import 'package:j_note/bloc/auth/auth_bloc.dart';
 import 'package:j_note/data/auth_data/auth_data.dart';
 
 class LoginScreen extends StatefulWidget {
-  final VoidCallback show;
-
-  const LoginScreen(
-    this.show, {
+  const LoginScreen({
     super.key,
   });
 
@@ -209,7 +207,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       fontSize: 16),
                                 ),
                                 GestureDetector(
-                                  onTap: widget.show,
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const RegisterScreen()));
+                                  },
                                   child: const Text(
                                     ' Register now',
                                     style: TextStyle(

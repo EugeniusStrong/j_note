@@ -7,19 +7,12 @@ abstract class RegisterEvent extends Equatable {
 class SignUpPressed extends RegisterEvent {
   final String email;
   final String password;
-  final String confirm;
 
   const SignUpPressed({
-    required this.confirm,
     required this.email,
     required this.password,
   });
 
   @override
   List<Object?> get props => [email, password];
-}
-
-class SingUpScreenShow extends RegisterEvent {
-  @override
-  List<Object?> get props => [];
 }

@@ -30,9 +30,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LoginScreen(
-            () {},
-          ),
+          builder: (context) => const LoginScreen(),
         ),
       );
     });
@@ -49,102 +47,113 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ForgotPasswordBloc(AuthenticationRemote()),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Reset Password Form'),
-          centerTitle: true,
-        ),
-        backgroundColor: Colors.grey[300],
-        body: BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
-          builder: (context, state) {
-            if (state is ForgotPasswordInitial) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 60,
+      child: Builder(builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Reset Password Form'),
+            centerTitle: true,
+          ),
+          backgroundColor: Colors.grey[300],
+          body: BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
+            listener: (context, state) {
+              if (state is ForgotPasswordResetSuccess) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    content: Text(
+                        'Password reset link sent to ${_emailController.text}! Check your email'),
+                  ),
+                );
+              } else if (state is ForgotPasswordFailed) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    content: Text(state.error.toString()),
+                  ),
+                );
+              }
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  const FaIcon(
+                    FontAwesomeIcons.key,
+                    color: Colors.deepPurple,
+                    size: 150,
+                  ),
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Text(
+                      'Enter Your Email and we will send you a password reset link',
+                      style: GoogleFonts.bebasNeue(fontSize: 30),
+                      textAlign: TextAlign.center,
                     ),
-                    const FaIcon(
-                      FontAwesomeIcons.key,
-                      color: Colors.deepPurple,
-                      size: 150,
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: Text(
-                        'Enter Your Email and we will send you a password reset link',
-                        style: GoogleFonts.bebasNeue(fontSize: 30),
-                        textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.white),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: TextField(
+                          controller: _emailController,
+                          decoration: const InputDecoration(
+                              border: InputBorder.none, hintText: 'Email'),
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: GestureDetector(
                       child: Container(
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
+                          color: Colors.deepPurple,
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.white),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: TextField(
-                            controller: _emailController,
-                            decoration: const InputDecoration(
-                                border: InputBorder.none, hintText: 'Email'),
+                        child: const Center(
+                          child: Text(
+                            'Reset Password',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
                           ),
                         ),
                       ),
+                      onTap: () {
+                        context.read<ForgotPasswordBloc>().add(
+                              ResetButtonPressed(
+                                email: _emailController.text.trim(),
+                              ),
+                            );
+                        _startTimer();
+                      },
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: GestureDetector(
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Colors.deepPurple,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Reset Password',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          context.read<ForgotPasswordBloc>().add(
-                                PressResetButton(
-                                  email: _emailController.text.trim(),
-                                  context: context,
-                                ),
-                              );
-                          _startTimer();
-                          _emailController.clear();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
-      ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }),
     );
   }
 }
