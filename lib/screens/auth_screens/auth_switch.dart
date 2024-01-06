@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:j_note/auth_screens/login_screen.dart';
 import 'package:j_note/bloc/app/app_bloc.dart';
-import 'package:j_note/note_screens/note_list_screen.dart';
+import 'package:j_note/screens/auth_screens/auth_screen.dart';
+import 'package:j_note/screens/note_screens/note_list_screen.dart';
 
-class LoginSwitch extends StatelessWidget {
-  const LoginSwitch({super.key});
+class AuthSwitch extends StatelessWidget {
+  const AuthSwitch({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class LoginSwitch extends StatelessWidget {
         listener: (BuildContext context, state) {
           if (state is GoToLoginScreen) {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()));
+                MaterialPageRoute(builder: (context) => const AuthScreen()));
           } else if (state is GoToListNoteListScreen) {
             Navigator.push(
                 context,

@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:j_note/auth_screens/forgot_pass_screen.dart';
-import 'package:j_note/auth_screens/register_screen.dart';
 import 'package:j_note/bloc/auth/auth_bloc.dart';
 import 'package:j_note/data/auth_data/auth_data.dart';
+import 'package:j_note/screens/auth_screens/auth_switch.dart';
+import 'package:j_note/screens/auth_screens/forgot_pass_screen.dart';
+import 'package:j_note/screens/auth_screens/register_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({
     super.key,
   });
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _AuthScreenState extends State<AuthScreen> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
@@ -190,6 +191,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                               _passwordController.text.trim(),
                                         ),
                                       );
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const AuthSwitch()));
                                 },
                               ),
                             ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:j_note/data/firestore/firestore.dart';
 import 'package:j_note/model/note_model.dart';
-import 'package:j_note/note_screens/edit_note.dart';
+import 'package:j_note/screens/note_screens/edit_note.dart';
 
 class TaskWidget extends StatefulWidget {
   final NoteModel _note;

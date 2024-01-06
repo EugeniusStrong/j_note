@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:j_note/auth_screens/login_screen.dart';
 import 'package:j_note/bloc/forgot_pass/forgot_password_bloc.dart';
 import 'package:j_note/data/auth_data/auth_data.dart';
+import 'package:j_note/screens/auth_screens/auth_screen.dart';
 
 class ForgotPassScreen extends StatefulWidget {
   const ForgotPassScreen({super.key});
@@ -30,7 +30,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
+          builder: (context) => const AuthScreen(),
         ),
       );
     });

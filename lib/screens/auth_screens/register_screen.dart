@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:j_note/auth_screens/login_screen.dart';
 import 'package:j_note/bloc/register/register_bloc.dart';
 import 'package:j_note/data/auth_data/auth_data.dart';
+import 'package:j_note/screens/auth_screens/auth_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({
@@ -209,7 +209,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const LoginScreen()));
+                                            const AuthScreen()));
                               },
                               child: const Text(
                                 ' Login now',

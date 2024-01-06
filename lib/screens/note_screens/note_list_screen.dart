@@ -4,7 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:j_note/data/auth_data/auth_data.dart';
 import 'package:j_note/data/firestore/firestore.dart';
-import 'package:j_note/note_screens/add_note.dart';
+import 'package:j_note/screens/auth_screens/auth_screen.dart';
+import 'package:j_note/screens/note_screens/add_note.dart';
 import 'package:j_note/widgets/task_widget.dart';
 
 class NoteListScreen extends StatefulWidget {
@@ -28,6 +29,9 @@ class _NoteListScreenState extends State<NoteListScreen> {
           IconButton(
             onPressed: () {
               AuthenticationRemote().signOut();
+
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const AuthScreen()));
             },
             icon: const Icon(
               Icons.logout,
