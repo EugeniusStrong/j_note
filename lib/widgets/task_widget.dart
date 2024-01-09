@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:j_note/data/firestore/firestore.dart';
 import 'package:j_note/model/note_model.dart';
 import 'package:j_note/screens/note_screens/edit_note.dart';
+import 'package:j_note/widgets/image_for_card.dart';
 
 class TaskWidget extends StatefulWidget {
   final NoteModel _note;
@@ -36,7 +37,9 @@ class _TaskWidgetState extends State<TaskWidget> {
         ),
         child: Row(
           children: [
-            imageForCard(),
+            imageForCard(
+              'assets/images_actions/${widget._note.image}.jpg',
+            ),
             const SizedBox(
               width: 8,
             ),
@@ -50,11 +53,17 @@ class _TaskWidgetState extends State<TaskWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          overflow: TextOverflow.ellipsis,
-                          widget._note.subtitle,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            widget._note.title,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              decoration:
+                                  isDone ? TextDecoration.lineThrough : null,
+                              color: isDone ? Colors.grey : Colors.black,
+                            ),
+                          ),
                         ),
                         Checkbox(
                           fillColor: MaterialStateProperty.resolveWith<Color?>(
@@ -80,7 +89,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                     ),
                     Text(
                       overflow: TextOverflow.ellipsis,
-                      widget._note.title,
+                      widget._note.subtitle,
                       style:
                           const TextStyle(fontSize: 16, color: Colors.black45),
                     ),
@@ -161,28 +170,6 @@ class _TaskWidgetState extends State<TaskWidget> {
               ),
             )
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget imageForCard() {
-    return Padding(
-      padding: const EdgeInsets.all(4),
-      child: Container(
-        width: 120,
-        height: 130,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(7),
-            bottomLeft: Radius.circular(7),
-          ),
-          image: DecorationImage(
-            image: AssetImage(
-              'assets/images_actions/${widget._note.image}.jpg',
-            ),
-            fit: BoxFit.cover,
-          ),
         ),
       ),
     );

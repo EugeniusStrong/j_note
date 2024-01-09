@@ -45,9 +45,8 @@ class _EditNoteState extends State<EditNote> {
         setState(() {
           imageIndex = index;
         });
-        return null;
       },
-      'Edit',
+      'EDIT',
       _titleController,
       _subtitleController,
       imageIndex,

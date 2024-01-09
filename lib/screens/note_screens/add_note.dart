@@ -41,9 +41,8 @@ class _AddNoteState extends State<AddNote> {
         setState(() {
           imageIndex = index;
         });
-        return null;
       },
-      'Add',
+      'ADD',
       _subtitleController,
       _titleController,
       imageIndex,
